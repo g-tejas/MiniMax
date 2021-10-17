@@ -91,7 +91,7 @@ def undo_move(state, position):
 def clean():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def minimax(state, depth, isMaximizer):
+def minimax(state, depth, alpha, beta, isMaximizer):
     global count
     if game_over(state):
         count += 1
@@ -108,11 +108,15 @@ def minimax(state, depth, isMaximizer):
         bestPosition = choice(empty_cells(state))
         for position in empty_cells(state):
             place_move(state, position, COMP)
-            eval = minimax(state, depth + 1, False)
+            eval = minimax(state, depth + 1, alpha, beta, False)
             undo_move(state, position)
             if eval > maxEval:
                 maxEval = eval
                 bestPosition = position
+            alpha = max(eval, alpha)
+            if beta <= alpha:
+                break
+            
         if depth == 0:
             print(f"Searched {count} possible end states without pruning")
             return bestPosition
@@ -122,10 +126,12 @@ def minimax(state, depth, isMaximizer):
         minEval = infinity
         for position in empty_cells(state):
             place_move(state, position, HUMAN)
-            eval = minimax(state, depth + 1, True)
+            eval = minimax(state, depth + 1, alpha, beta, True)
             undo_move(state, position)
-            if eval < minEval:
-                minEval = eval
+            minEval = min(eval, minEval)
+            beta = min(eval, beta)
+            if beta <= alpha:
+                break
         return minEval
 
 
