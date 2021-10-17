@@ -6,6 +6,7 @@ from random import choice
 
 COMP = +1
 HUMAN = -1
+count = 0
 
 def generate_board():
     return [[0 for _ in range(3)] for _ in range(3)]
@@ -91,7 +92,9 @@ def clean():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def minimax(state, depth, isMaximizer):
+    global count
     if game_over(state):
+        count += 1
         score = evaluate(state)
         if score != 0:
             if checkWinner(state, COMP):
@@ -111,6 +114,7 @@ def minimax(state, depth, isMaximizer):
                 maxEval = eval
                 bestPosition = position
         if depth == 0:
+            print(f"Searched {count} possible end states without pruning")
             return bestPosition
         return maxEval
     
