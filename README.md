@@ -5,7 +5,7 @@ Algorithms from Scratch: MiniMax
 
 ### Instructions
 
-To pit 2 agents against each other and get the tie-win-loss distribution across 100 games, run
+To play against the bot
 
 ```bash
 python minimax.py
