@@ -118,7 +118,7 @@ def minimax(state, depth, alpha, beta, isMaximizer):
                 break
             
         if depth == 0:
-            print(f"Searched {count} possible end states without pruning")
+            print(f"Searched {count} possible end states with pruning")
             return bestPosition
         return maxEval
     
